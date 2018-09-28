@@ -202,6 +202,7 @@ public class Solution{
 		else
 			m_error += "The solution is not feasible.";
 		return result;
+		boolean b=false;
 	}
 
 	/**
