@@ -1,5 +1,7 @@
 package tsp;
 
+import tsp.metaheuristic.LocalSearch;
+
 /**
  * 
  * This class is the place where you should enter your code and from which you can create your own objects.
@@ -67,8 +69,12 @@ public class TSPSolver {
 	 * 
 	 * @throws Exception may return some error, in particular if some vertices index are wrong.
 	 */
-	public void solve() throws Exception
-	{
+	public void solve() throws Exception {
+
+		//
+		LocalSearch local=new LocalSearch(m_instance);
+		//
+		
 		m_solution.print(System.err);
 		
 		// Example of a time loop
@@ -76,8 +82,10 @@ public class TSPSolver {
 		long spentTime = 0;
 		do
 		{
-			// TODO
-			// Code a loop base on time here
+			//
+			local.solve(m_solution);
+			//
+			
 			spentTime = System.currentTimeMillis() - startTime;
 		}while(spentTime < (m_timeLimit * 1000 - 100) );
 		
