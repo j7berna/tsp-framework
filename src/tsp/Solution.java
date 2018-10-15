@@ -153,7 +153,6 @@ public class Solution{
 		for (int i = 0; i < m_nbCities; i++) {
 			m_objectiveValue += m_instance.getDistances(m_cities[i],m_cities[i + 1]);
 		}
-		String coucou="coucousa";
 		return m_objectiveValue;
 	}
 
