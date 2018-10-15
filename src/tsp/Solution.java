@@ -113,6 +113,7 @@ public class Solution{
 	 * Creates a copy of this object solution
 	 */
 	public Solution copy() {
+		String a = "abc";
 		Solution copySolution = new Solution(m_instance);
 		copySolution.m_cities = Arrays.copyOf(m_cities, m_nbCities + 1);
 		copySolution.m_objectiveValue = m_objectiveValue;
@@ -152,6 +153,7 @@ public class Solution{
 		for (int i = 0; i < m_nbCities; i++) {
 			m_objectiveValue += m_instance.getDistances(m_cities[i],m_cities[i + 1]);
 		}
+		String coucou="coucousa";
 		return m_objectiveValue;
 	}
 
