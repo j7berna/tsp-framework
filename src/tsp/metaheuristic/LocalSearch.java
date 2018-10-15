@@ -9,13 +9,13 @@ import tsp.Solution;
 
 public class LocalSearch extends AMetaheuristic {
 
-	public LocalSearch(Instance instance, String name) throws Exception {
+	public LocalSearch(Instance instance) throws Exception {
 		super(instance,"Local Search");
 	}
 
 	//première version non optimisée
 	public Solution solve(Solution sol) throws Exception {
-		long delta=100000;
+		long delta=Integer.MAX_VALUE;
 		while (delta>0) {
 			
 			List<Solution> swaps=new ArrayList<Solution>();
