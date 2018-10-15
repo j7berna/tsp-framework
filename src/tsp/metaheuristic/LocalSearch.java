@@ -1,6 +1,7 @@
 package tsp.metaheuristic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import tsp.Instance;
@@ -12,21 +13,30 @@ public class LocalSearch extends AMetaheuristic {
 		super(instance,"Local Search");
 	}
 
+	//première version non optimisée
 	public Solution solve(Solution sol) throws Exception {
 		long delta=100000;
-		List<Long> swaps=new ArrayList<Long>();	
-		swaps.add(sol.getObjectiveValue());
 		while (delta>0) {
-			//on réalise tous les swaps possibles à partir de la solution initiale
+			
+			List<Solution> swaps=new ArrayList<Solution>();
+			swaps.add(sol);
+			//on fait une liste de l'ensemble des swaps possibles
 			for(int d=0;d<sol.getInstance().getNbCities()-1;d++) {
 				for(int i=sol.getInstance().getNbCities()-d-1;i>=0;i--) {
-					swaps.add(this.swap(sol, sol.getInstance().getNbCities()-d, i).getObjectiveValue());
+					swaps.add(this.swap(sol, sol.getInstance().getNbCities()-d, i));
 				}
 			}
 			
-			//on choisit le meilleur swap en terme de objectiveValue
+			//on cherche la meilleure solution en terme d'objectiveValue
+			List<Long> swaps_o = new ArrayList<Long>();
+			for(Solution i:swaps) { swaps_o.add(i.getObjectiveValue());	}
+			Solution best=swaps.get(swaps_o.indexOf(Collections.min(swaps_o)));
 			
+			//actualisation du delta
+			delta=sol.getObjectiveValue()-best.getObjectiveValue();
+			if (delta>0) sol=best;
 		}
+		return sol;
 	}
 	
 	//réalise un swap entre les villes en position i et j dans la solution s
