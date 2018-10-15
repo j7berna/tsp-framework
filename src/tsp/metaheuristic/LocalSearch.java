@@ -16,6 +16,12 @@ public class LocalSearch extends AMetaheuristic {
 	//première version non optimisée
 	public Solution solve(Solution sol) throws Exception {
 		long delta=Integer.MAX_VALUE;
+		
+		//initialisation de la solution
+		for(int i=0;i<sol.getInstance().getNbCities();i++) {
+			sol.setCityPosition(i, i);
+		}
+		
 		while (delta>0) {
 			
 			List<Solution> swaps=new ArrayList<Solution>();
