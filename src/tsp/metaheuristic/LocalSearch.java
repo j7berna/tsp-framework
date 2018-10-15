@@ -21,9 +21,9 @@ public class LocalSearch extends AMetaheuristic {
 			List<Solution> swaps=new ArrayList<Solution>();
 			swaps.add(sol);
 			//on fait une liste de l'ensemble des swaps possibles
-			for(int d=0;d<sol.getInstance().getNbCities()-1;d++) {
-				for(int i=sol.getInstance().getNbCities()-d-1;i>=0;i--) {
-					swaps.add(this.swap(sol, sol.getInstance().getNbCities()-d, i));
+			for(int d=0;d<sol.getInstance().getNbCities()-2;d++) {
+				for(int i=d+1;i<sol.getInstance().getNbCities();i++) {
+					swaps.add(this.swap(sol, d, i));
 				}
 			}
 			
