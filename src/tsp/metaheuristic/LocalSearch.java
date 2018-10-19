@@ -39,14 +39,14 @@ public class LocalSearch extends AMetaheuristic {
 		Swap voisins=new Swap(this.getInstance());
 		Solution best=sol2;
 
-		
 		while (delta>0) {
 			best=voisins.bestSolution(sol2);
 						
 			//actualisation du delta
 			delta=sol2.getObjectiveValue()-best.getObjectiveValue();
 			
-			if (delta>0) sol2=best;
+			if (delta>0) 
+				sol2=best;
 			
 		}
 		this.isDone=true;
