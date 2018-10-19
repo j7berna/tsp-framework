@@ -16,6 +16,7 @@ public class LocalSearch extends AMetaheuristic {
 
 	//première version non optimisée
 	public Solution solve(Solution sol) throws Exception {
+		//initialisation de delta à l'infini
 		long delta=Integer.MAX_VALUE;
 		
 		//initialisation de la solution
