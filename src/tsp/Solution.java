@@ -113,7 +113,6 @@ public class Solution{
 	 * Creates a copy of this object solution
 	 */
 	public Solution copy() {
-		String a = "abc";
 		Solution copySolution = new Solution(m_instance);
 		copySolution.m_cities = Arrays.copyOf(m_cities, m_nbCities + 1);
 		copySolution.m_objectiveValue = m_objectiveValue;

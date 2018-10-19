@@ -215,9 +215,6 @@ public class Instance {
 			System.err.println(line);
 		} while (!line.startsWith("EDGE_WEIGHT_SECTION"));
 
-
-		int index = 0;
-
 		// Create the distance matrix
 		m_distances = new long[m_nbCities][];
 		for (int i = 0; i < m_nbCities; i++) {

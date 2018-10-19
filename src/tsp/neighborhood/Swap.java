@@ -13,16 +13,19 @@ public class Swap extends ANeighborhood {
 		super(instance,"Swap");
 	}
 	
+	public Instance getInstance() {
+		return super.m_instance;
+	}
+	
 	
 	/** getNeighborhood(Solution sol)
 	 * @return Retourne les positions voisines de sol (règle des swap) 
 	 */
 	public List<Solution> getNeighborhood(Solution sol) throws Exception {
 		List<Solution> swap = new ArrayList<Solution>();
-		swap.add(sol);
 		
-		for(int d=0;d<sol.getInstance().getNbCities()-2;d++) {
-			for(int i=d+1;i<sol.getInstance().getNbCities();i++) {
+		for(int d=0;d<this.getInstance().getNbCities()-1;d++) {
+			for(int i=d+1;i<this.getInstance().getNbCities();i++) {
 				swap.add(this.swap(sol, d, i));
 			}
 		}
@@ -36,7 +39,7 @@ public class Swap extends ANeighborhood {
 	 * @param s la solution à étudier
 	 * @param pos_i 
 	 * @param pos_j 
-	 * @return Copie la solution s, échange les villes en position i et j et retourne la solution
+	 * @return Copie la solution s, échange les villes en position i et j et retourne la solution recalculée
 	 * @throws Exception
 	 */
 		public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
@@ -46,6 +49,7 @@ public class Swap extends ANeighborhood {
 			sol.setCityPosition(sol.getCity(pos_i),pos_j);
 			sol.setCityPosition(ville_arrivee, pos_i);
 			sol.evaluate();
+
 			return sol;
 		}
 		
