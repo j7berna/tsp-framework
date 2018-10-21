@@ -71,25 +71,21 @@ public class TSPSolver {
 	 */
 	public void solve() throws Exception {
 
-		//
+		// 
 		LocalSearch local_search=new LocalSearch(m_instance);
 		//
 				
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
-		do
-		{
+		do {
 			//
-			this.m_solution=local_search.solve(m_solution);
+			this.m_solution=local_search.solve(this.m_solution);
 			//
 			
 			spentTime = System.currentTimeMillis() - startTime;
-		}while(spentTime < (m_timeLimit * 1000 - 100) && !local_search.isDone());
-		
-		m_solution.print(System.err);
-		
-		
+		} while(spentTime < (m_timeLimit * 1000 - 100) && !local_search.isDone());
+		this.m_solution.print(System.err);
 		
 	}
 

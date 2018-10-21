@@ -1,7 +1,6 @@
 package tsp.neighborhood;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import tsp.Instance;
@@ -26,7 +25,7 @@ public class Swap extends ANeighborhood {
 	public List<Solution> getNeighborhood(Solution sol) throws Exception {
 		List<Solution> voisins = new ArrayList<Solution>();
 		
-		for(int d=0;d<this.getInstance().getNbCities()-1;d++) {
+		for(int d=1;d<this.getInstance().getNbCities()-1;d++) {
 			for(int i=d+1;i<this.getInstance().getNbCities();i++) {
 				voisins.add(this.swap(sol, d, i));
 			}
@@ -63,10 +62,17 @@ public class Swap extends ANeighborhood {
 		 * 
 		 */
 		public Solution bestSolution(Solution sol) throws Exception {
-			List<Long> swaps_o = new ArrayList<Long>();
-			List<Solution> swaps = this.getNeighborhood(sol);
-			for(Solution i:swaps) { swaps_o.add(i.getObjectiveValue());	}
-			return swaps.get(swaps_o.indexOf(Collections.min(swaps_o)));
+			List<Solution> voisins=this.getNeighborhood(sol);
+			long j=Long.MAX_VALUE;
+			Solution best=null;
+
+			for(Solution i:voisins) {
+				if (i.getObjectiveValue()<j) {
+					best=i;
+					j=i.getObjectiveValue();
+				}
+			}
+			return best;
 		}
 	
 	

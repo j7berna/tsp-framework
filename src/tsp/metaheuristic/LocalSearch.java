@@ -6,6 +6,7 @@ import tsp.neighborhood.Swap;
 
 public class LocalSearch extends AMetaheuristic {
 	
+	//Variable d'instance valant true si la recherhe locale est terminée (condition de sortie de boucle dans TSPSolver)
 	protected boolean isDone;
 
 	//Constructeur
@@ -14,41 +15,33 @@ public class LocalSearch extends AMetaheuristic {
 		this.isDone=false;
 	}
 	
-	//accesseur de la variable d'instance
-	public Instance getInstance() {
-		return super.m_instance;
-	}
-	
-	public boolean isDone() {
-		return this.isDone;
-	}
+	//Accesseurs
+	public Instance getInstance() {return super.m_instance;}
+	public boolean isDone() {return this.isDone;}
 	
 	
 
-	//première version non optimisée
 	public Solution solve(Solution sol) throws Exception {
-		//initialisation de delta à l'infini
-		long delta=Integer.MAX_VALUE;
-			
 		Solution sol2=sol.copy();
 		
-		for(int i=0;i<this.getInstance().getNbCities();i++) {
-			sol2.setCityPosition(i, i);
-		}
+		//Initialisation
+		long delta=Integer.MAX_VALUE;			
+		for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
+		sol2.evaluate();
 		
+		//Création d'un voisinage
 		Swap voisins=new Swap(this.getInstance());
 		Solution best=sol2;
 
 		while (delta>0) {
+			//best est la meilleure solution du voisinage de sol2
 			best=voisins.bestSolution(sol2);
-						
 			//actualisation du delta
 			delta=sol2.getObjectiveValue()-best.getObjectiveValue();
-			
-			if (delta>0) 
-				sol2=best;
-			
+			//Si best est meilleure que sol2 on remplace sol2
+			if (delta>0) sol2=best;
 		}
+		
 		this.isDone=true;
 		return sol2;
 	}
