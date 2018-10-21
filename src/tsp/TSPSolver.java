@@ -1,6 +1,6 @@
 package tsp;
 
-import tsp.metaheuristic.LocalSearch;
+import tsp.metaheuristic.LocalSearchSwap;
 
 /**
  * 
@@ -72,7 +72,7 @@ public class TSPSolver {
 	public void solve() throws Exception {
 
 		// 
-		LocalSearch local_search=new LocalSearch(m_instance);
+		LocalSearchSwap local_search=new LocalSearchSwap(m_instance);
 		//
 				
 		// Example of a time loop

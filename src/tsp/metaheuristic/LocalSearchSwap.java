@@ -4,13 +4,13 @@ import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.Swap;
 
-public class LocalSearch extends AMetaheuristic {
+public class LocalSearchSwap extends AMetaheuristic {
 	
 	//Variable d'instance valant true si la recherhe locale est terminée (condition de sortie de boucle dans TSPSolver)
 	protected boolean isDone;
 
 	//Constructeur
-	public LocalSearch(Instance instance) throws Exception {
+	public LocalSearchSwap(Instance instance) throws Exception {
 		super(instance,"Local Search");
 		this.isDone=false;
 	}
@@ -25,7 +25,7 @@ public class LocalSearch extends AMetaheuristic {
 		Solution sol2=sol.copy();
 		
 		//Initialisation
-		long delta=Integer.MAX_VALUE;			
+		long delta=Integer.MAX_VALUE;
 		for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
 		sol2.evaluate();
 		
