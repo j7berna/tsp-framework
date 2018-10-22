@@ -7,9 +7,9 @@ import java.util.List;
 import tsp.Instance;
 import tsp.Solution;
 
-public class Swap extends ANeighborhood {
+public class NeighborSwap extends ANeighborhood {
 	
-	public Swap(Instance instance) throws Exception {
+	public NeighborSwap(Instance instance) throws Exception {
 		super(instance,"Swap");
 	}
 	

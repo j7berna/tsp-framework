@@ -2,7 +2,7 @@ package tsp.metaheuristic;
 
 import tsp.Instance;
 import tsp.Solution;
-import tsp.neighborhood.Swap;
+import tsp.neighborhood.NeighborSwap;
 
 public class LocalSearchSwap extends AMetaheuristic {
 	
@@ -30,7 +30,7 @@ public class LocalSearchSwap extends AMetaheuristic {
 		sol2.evaluate();
 		
 		//Création d'un voisinage
-		Swap voisins=new Swap(this.getInstance());
+		NeighborSwap voisins=new NeighborSwap(this.getInstance());
 		Solution best=sol2;
 
 		while (delta>0) {
