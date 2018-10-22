@@ -1,4 +1,4 @@
-package tsp.heuristic;
+package tsp.metaheuristic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +7,8 @@ import java.util.List;
 import tsp.Instance;
 import tsp.Solution;
 
-public class Insertion extends AHeuristic {
-	public Insertion(Instance instance) throws Exception {
+public class InsertionB extends AMetaheuristic {
+	public InsertionB(Instance instance) throws Exception {
 		super(instance,"Insertion");
 	}
 	
@@ -58,10 +58,28 @@ public class Insertion extends AHeuristic {
 			int imin=indexMin(longueurs);
 			sol=sols[imin];
 		}
-		this.m_solution=new Solution(inst);
 		System.out.println(Arrays.toString(sol));
 	}
 	
 	public static void main(String[] args) {
+		Instance inst = new Instance("/tsp-framework/tsp-framework-master/instances/brazil58.tsp", 1);
+		long[][] M=inst.getDistances();
+		int[] sol= {0,0};
+		for (int i=1;i<M.length;i++) {
+			int[][] sols= new int[i][sol.length+1];
+			int[] longueurs= new int[i];
+			for (int j=1;j<=i;j++) {
+				sols[j-1]=ajouter(j,i,sol);
+				longueurs[j-1]=longueur(sols[j-1], M);
+			}
+			int imin=indexMin(longueurs);
+			sol=sols[imin];
+		}
+		System.out.println(Arrays.toString(sol));
+	}
+
+	public Solution solve(Solution sol) throws Exception {
+		return null;
 	}
 }
+
