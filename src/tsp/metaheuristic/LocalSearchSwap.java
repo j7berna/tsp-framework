@@ -34,16 +34,10 @@ public class LocalSearchSwap extends AMetaheuristic {
 		//for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
 		
 		//Initialisation aléatoire
-		List<Integer> rand = new ArrayList<Integer>(this.m_instance.getNbCities());
-		for(int i=1;i<this.m_instance.getNbCities();i++) {rand.set(i,i);}
+		List<Integer> rand = new ArrayList<Integer>();
+		for(int i=1;i<this.getInstance().getNbCities();i++) {rand.add(i);}
 		Collections.shuffle(rand);
-		for(int i=0;i<this.getInstance().getNbCities();i++) {
-			if (i!=0) {
-				sol2.setCityPosition(i, rand.get(i));
-			}
-
-		}
-		sol2.print(System.err);
+		for(int i=1;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, rand.get(i-1));}
 		
 		
 		
