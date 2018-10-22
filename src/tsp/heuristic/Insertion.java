@@ -12,7 +12,6 @@ public class Insertion extends AHeuristic {
 	}
 	
 	public static int[] ajouter(int index,int element, int[] l) {
-		int a=2;
 		int[] lbis=new int[l.length+1];
 		for (int i=0;i<index;i++) {
 			lbis[i]=l[i];
@@ -58,8 +57,5 @@ public class Insertion extends AHeuristic {
 		}
 		System.out.println(Arrays.toString(sol));
 	}
-	
-	public static void main(String[] args) {
-		
-	}
+
 }

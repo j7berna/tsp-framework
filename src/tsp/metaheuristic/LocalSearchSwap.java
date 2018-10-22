@@ -1,5 +1,9 @@
 package tsp.metaheuristic;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.NeighborSwap;
@@ -23,10 +27,26 @@ public class LocalSearchSwap extends AMetaheuristic {
 
 	public Solution solve(Solution sol) throws Exception {
 		Solution sol2=sol.copy();
-		
-		//Initialisation
 		long delta=Integer.MAX_VALUE;
-		for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
+
+		
+		//Initialisation dans l'ordre
+		//for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
+		
+		//Initialisation aléatoire
+		List<Integer> rand = new ArrayList<Integer>(this.m_instance.getNbCities());
+		for(int i=1;i<this.m_instance.getNbCities();i++) {rand.set(i,i);}
+		Collections.shuffle(rand);
+		for(int i=0;i<this.getInstance().getNbCities();i++) {
+			if (i!=0) {
+				sol2.setCityPosition(i, rand.get(i));
+			}
+
+		}
+		sol2.print(System.err);
+		
+		
+		
 		sol2.evaluate();
 		
 		//Création d'un voisinage
