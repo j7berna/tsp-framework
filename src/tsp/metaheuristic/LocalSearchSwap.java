@@ -23,25 +23,27 @@ public class LocalSearchSwap extends AMetaheuristic {
 	public Instance getInstance() {return super.m_instance;}
 	public boolean isDone() {return this.isDone;}
 	
+	//Initialisation aléatoire
+	public Solution randInit(Solution sol) throws Exception {
+		List<Integer> rand = new ArrayList<Integer>();
+		for(int i=1;i<this.getInstance().getNbCities();i++) {rand.add(i);}
+		Collections.shuffle(rand);
+		for(int i=1;i<this.getInstance().getNbCities();i++) {sol.setCityPosition(i, rand.get(i-1));}
+		sol.evaluate();
+		return sol;
+	}
+	
 	
 
 	public Solution solve(Solution sol) throws Exception {
 		Solution sol2=sol.copy();
 		long delta=Integer.MAX_VALUE;
-
 		
 		//Initialisation dans l'ordre
 		//for(int i=0;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, i);}
 		
 		//Initialisation aléatoire
-		List<Integer> rand = new ArrayList<Integer>();
-		for(int i=1;i<this.getInstance().getNbCities();i++) {rand.add(i);}
-		Collections.shuffle(rand);
-		for(int i=1;i<this.getInstance().getNbCities();i++) {sol2.setCityPosition(i, rand.get(i-1));}
-		
-		
-		
-		sol2.evaluate();
+		sol2=this.randInit(sol2);
 		
 		//Création d'un voisinage
 		NeighborSwap voisins=new NeighborSwap(this.getInstance());
@@ -55,7 +57,7 @@ public class LocalSearchSwap extends AMetaheuristic {
 			//Si best est meilleure que sol2 on remplace sol2
 			if (delta>0) sol2=best;
 		}
-		
+					
 		this.isDone=true;
 		return sol2;
 	}
