@@ -34,18 +34,22 @@ public class LocalSearchSwap extends AMetaheuristic {
 	}
 	
 	//Initialisation dans l'ordre
-	public Solution init(Solution sol) throws Exception{
+	public Solution ordInit(Solution sol) throws Exception{
 		for(int i=0;i<this.getInstance().getNbCities();i++) {sol.setCityPosition(i, i);}
 		sol.evaluate();
 		return sol;
 	}
-
+	
 	public Solution solve(Solution sol) throws Exception {
 		Solution sol2=sol.copy();
 		long delta=Integer.MAX_VALUE;
 		
-		sol2=this.init(sol2);
+		sol2=this.ordInit(sol2);
 		//sol2=this.randInit(sol2);
+		
+		//Initialisation avec une autre heuristique
+		//InsertionB init=new InsertionB(this.getInstance());
+		//sol2=init.solve(sol2);
 		
 		//Création d'un voisinage
 		NeighborSwap voisins=new NeighborSwap(this.getInstance());

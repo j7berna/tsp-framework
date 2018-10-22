@@ -4,10 +4,10 @@ package tsp.metaheuristic;
 import tsp.Instance;
 import tsp.Solution;
 
-public class InsertionB extends AMetaheuristic {
+public class Insertion extends AMetaheuristic {
 	private boolean isDone;
 	
-	public InsertionB(Instance instance) throws Exception {
+	public Insertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
 		this.isDone=false;
 	}
