@@ -6,7 +6,7 @@ import java.util.List;
 
 import tsp.Instance;
 import tsp.Solution;
-
+import tsp.neighborhood.*;
 public class Insertion extends AHeuristic {
 	public Insertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
@@ -45,8 +45,7 @@ public class Insertion extends AHeuristic {
 
 
 	public void solve() throws Exception {
-		Instance inst = new Instance("/tsp-framework/tsp-framework-master/instances/brazil58.tsp", 1);
-		long[][] M=inst.getDistances();
+		long[][] M=this.m_instance.getDistances();
 		int[] sol= {0,0};
 		for (int i=1;i<M.length;i++) {
 			int[][] sols= new int[i][sol.length+1];
@@ -58,7 +57,7 @@ public class Insertion extends AHeuristic {
 			int imin=indexMin(longueurs);
 			sol=sols[imin];
 		}
-		this.m_solution=new Solution(inst);
+		this.m_solution=new Solution(this.m_instance);
 		System.out.println(Arrays.toString(sol));
 	}
 	
