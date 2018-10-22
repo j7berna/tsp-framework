@@ -12,6 +12,7 @@ public class Insertion extends AHeuristic {
 	}
 	
 	public static int[] ajouter(int index,int element, int[] l) {
+		int a=1;
 		int[] lbis=new int[l.length+1];
 		for (int i=0;i<index;i++) {
 			lbis[i]=l[i];
