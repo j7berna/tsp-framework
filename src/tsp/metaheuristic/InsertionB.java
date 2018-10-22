@@ -1,19 +1,22 @@
 package tsp.metaheuristic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import tsp.Instance;
 import tsp.Solution;
 
 public class InsertionB extends AMetaheuristic {
+	private boolean isDone;
+	
 	public InsertionB(Instance instance) throws Exception {
 		super(instance,"Insertion");
+		this.isDone=false;
+	}
+	
+	public boolean isDone() {
+		return this.isDone;
 	}
 	
 	public static int[] ajouter(int index,int element, int[] l) {
-		int a=2;
 		int[] lbis=new int[l.length+1];
 		for (int i=0;i<index;i++) {
 			lbis[i]=l[i];
@@ -44,9 +47,8 @@ public class InsertionB extends AMetaheuristic {
 	}
 
 
-	public void solve() throws Exception {
-		Instance inst = new Instance("/tsp-framework/tsp-framework-master/instances/brazil58.tsp", 1);
-		long[][] M=inst.getDistances();
+	public Solution solve(Solution s) throws Exception {
+		long[][] M=this.m_instance.getDistances();
 		int[] sol= {0,0};
 		for (int i=1;i<M.length;i++) {
 			int[][] sols= new int[i][sol.length+1];
@@ -58,28 +60,15 @@ public class InsertionB extends AMetaheuristic {
 			int imin=indexMin(longueurs);
 			sol=sols[imin];
 		}
-		System.out.println(Arrays.toString(sol));
-	}
-	
-	public static void main(String[] args) {
-		Instance inst = new Instance("/tsp-framework/tsp-framework-master/instances/brazil58.tsp", 1);
-		long[][] M=inst.getDistances();
-		int[] sol= {0,0};
-		for (int i=1;i<M.length;i++) {
-			int[][] sols= new int[i][sol.length+1];
-			int[] longueurs= new int[i];
-			for (int j=1;j<=i;j++) {
-				sols[j-1]=ajouter(j,i,sol);
-				longueurs[j-1]=longueur(sols[j-1], M);
-			}
-			int imin=indexMin(longueurs);
-			sol=sols[imin];
+		
+		for(int i=0;i<sol.length-1;i++) {
+			s.setCityPosition(i,sol[i]);
+			s.evaluate();
 		}
-		System.out.println(Arrays.toString(sol));
+		
+		this.isDone=true;
+		return s;
 	}
 
-	public Solution solve(Solution sol) throws Exception {
-		return null;
-	}
+
 }
-

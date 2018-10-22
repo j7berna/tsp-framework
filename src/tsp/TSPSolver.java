@@ -1,5 +1,6 @@
 package tsp;
 
+import tsp.metaheuristic.InsertionB;
 import tsp.metaheuristic.LocalSearchSwap;
 import tsp.heuristic.*;
 
@@ -74,21 +75,20 @@ public class TSPSolver {
 
 		// 
 		//LocalSearchSwap local_search=new LocalSearchSwap(m_instance);
-		Insertion insertion= new Insertion(m_instance);
+		InsertionB insertion= new InsertionB(m_instance);
 		//
 				
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
-		insertion.solve();
-		/*do {
+		do {
 			//
 			//this.m_solution=local_search.solve(this.m_solution);
-			insertion.solve();
+			this.m_solution=insertion.solve(m_solution);
 			//
 			
 			spentTime = System.currentTimeMillis() - startTime;
-		} while(spentTime < (m_timeLimit * 1000 - 100) && !local_search.isDone());*/
+		} while(spentTime < (m_timeLimit * 1000 - 100)&&!insertion.isDone());
 		this.m_solution.print(System.err);
 		
 	}
