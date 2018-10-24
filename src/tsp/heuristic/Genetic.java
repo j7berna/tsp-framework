@@ -1,4 +1,4 @@
-package tsp.metaheuristic;
+package tsp.heuristic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,17 +7,19 @@ import java.util.List;
 import tsp.Instance;
 import tsp.Solution;
 
-public class Genetic extends AMetaheuristic {
+public class Genetic extends AHeuristic {
+	
+	private boolean isDone;
 	
 	//Constructeur
 	public Genetic(Instance instance) throws Exception {
 		super(instance,"Genetic algorithm");
+		this.isDone=false;
 	}
 	
-	//Accesseur
-	public Instance getInstance() {
-		return super.m_instance;
-	}
+	//Accesseurs
+	public Instance getInstance() {return super.m_instance;}
+	public boolean isDone() {return this.isDone;}
 	
 	//Crée une solution au parcours généré aléatoirement
 	public Solution randSolution() throws Exception {
@@ -77,21 +79,52 @@ public class Genetic extends AMetaheuristic {
 		return bebe;
 	}
 	
-	//mute aléatoirement la solution s, le nombre de mutations dépend de la taille
-	public Solution mutation(Solution s) {
-		double taux_mutation=.01;
+	//swap des villes en position i et j dans la solution s
+	public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
+		Solution sol= s.copy();
+		int ville_arrivee=sol.getCity(pos_j);
+		sol.setCityPosition(sol.getCity(pos_i),pos_j);
+		sol.setCityPosition(ville_arrivee, pos_i);
+		sol.evaluate();
+		
+		return sol;
+	}
+	
+	//mute aléatoirement la solution s, le nombre de mutations dépend d'une probabilité de mutation
+	public Solution mutation(Solution s) throws Exception {
+		double p_mutation=.01;
 		int nbVilles=s.getInstance().getNbCities();
-		for(int i=0;i<nbVilles;i++) {
-			if(Math.random()<taux_mutation)
-				
+		for(int i=1;i<nbVilles;i++) {
+			if (Math.random()<p_mutation)
+				s=this.swap(s, i,(int)(nbVilles*Math.random()));
 		}
+		s.evaluate();
+		return s;
+	}
+	
+	public List<Solution> generation(int taille, List<Solution> prec) throws Exception{
+		List<Solution> gen=new ArrayList<Solution>();
+		for(int i=0;i<taille;i++) {
+			gen.add(this.mutation(this.crossover(this.getTwoBest(prec))));
+		}
+		return gen;
 	}
 	
 	
-	
-	public Solution solve(Solution sol) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void solve() throws Exception {
+		int nb_generations=3;
+		int taille=100;
+		
+		List<Solution> gen=this.newPopulation(taille);
+		
+		for(int g=0;g<nb_generations;g++) {
+			gen=generation(taille,gen);
+		}
+		
+		this.m_solution=gen.get(gen.indexOf(this.getTwoBest(gen).get(0)));
+		this.m_solution.evaluate();
+		this.isDone=true;
+
 	}
 	
 
