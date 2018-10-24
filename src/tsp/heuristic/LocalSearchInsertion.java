@@ -1,13 +1,13 @@
-package tsp.metaheuristic;
+package tsp.heuristic;
 
 
 import tsp.Instance;
 import tsp.Solution;
 
-public class Insertion extends AMetaheuristic {
+public class LocalSearchInsertion extends AHeuristic {
 	private boolean isDone;
 	
-	public Insertion(Instance instance) throws Exception {
+	public LocalSearchInsertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
 		this.isDone=false;
 	}
@@ -45,11 +45,12 @@ public class Insertion extends AMetaheuristic {
 		}
 		return res;
 	}
+	
 
-
-	public Solution solve(Solution s) throws Exception {
+	public void solve() throws Exception {
 		long[][] M=this.m_instance.getDistances();
 		int[] sol= {0,0};
+		Solution s=new Solution(this.m_instance);
 		for (int i=1;i<M.length;i++) {
 			int[][] sols= new int[i][sol.length+1];
 			int[] longueurs= new int[i];
@@ -67,7 +68,8 @@ public class Insertion extends AMetaheuristic {
 		}
 		
 		this.isDone=true;
-		return s;
+		this.m_solution=s;
+		this.m_solution.evaluate();
 	}
 
 

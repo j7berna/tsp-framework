@@ -1,4 +1,4 @@
-package tsp.metaheuristic;
+package tsp.heuristic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.NeighborSwap;
 
-public class LocalSearchSwap extends AMetaheuristic {
+public class LocalSearchSwap extends AHeuristic {
 	
 	//Variable d'instance valant true si la recherhe locale est terminée (condition de sortie de boucle dans TSPSolver)
 	protected boolean isDone;
@@ -24,7 +24,8 @@ public class LocalSearchSwap extends AMetaheuristic {
 	public boolean isDone() {return this.isDone;}
 	
 	//Initialisation aléatoire
-	public Solution randInit(Solution sol) throws Exception {
+	public Solution randInit() throws Exception {
+		Solution sol=new Solution(m_instance);
 		List<Integer> rand = new ArrayList<Integer>();
 		for(int i=1;i<this.getInstance().getNbCities();i++) {rand.add(i);}
 		Collections.shuffle(rand);
@@ -34,17 +35,17 @@ public class LocalSearchSwap extends AMetaheuristic {
 	}
 	
 	//Initialisation dans l'ordre
-	public Solution ordInit(Solution sol) throws Exception{
+	public Solution ordInit() throws Exception{
+		Solution sol=new Solution(this.m_instance);
 		for(int i=0;i<this.getInstance().getNbCities();i++) {sol.setCityPosition(i, i);}
 		sol.evaluate();
 		return sol;
 	}
 	
-	public Solution solve(Solution sol) throws Exception {
-		Solution sol2=sol.copy();
+	public void solve() throws Exception {
 		long delta=Integer.MAX_VALUE;
 		
-		sol2=this.ordInit(sol2);
+		Solution sol2=this.ordInit();
 		//sol2=this.randInit(sol2);
 		
 		//Initialisation avec une autre heuristique
@@ -65,7 +66,8 @@ public class LocalSearchSwap extends AMetaheuristic {
 		}
 					
 		this.isDone=true;
-		return sol2;
+		this.m_solution=sol2;
+		
 	}
 	
 
