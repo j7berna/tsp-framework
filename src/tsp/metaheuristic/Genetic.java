@@ -48,6 +48,40 @@ public class Genetic extends AMetaheuristic {
 		return ov;
 	}
 	
+	//retourne les deux meilleures solutions d'une population
+	public List<Solution> getTwoBest(List<Solution> pop){
+		List<Solution> res=new ArrayList<Solution>();
+		List<Long> ov=this.getObjectiveValues(pop);
+		int min1=ov.indexOf(Collections.min(ov));
+		ov.remove(min1);
+		int min2=ov.indexOf(Collections.min(ov));
+		if (min2>=min1) min2++;
+		res.add(pop.get(min1));
+		res.add(pop.get(min2));
+		return res;
+	}
+	
+	// Génère une solution fille
+	public Solution crossover(List<Solution> deuxsol) throws Exception {
+		Solution bebe=new Solution(this.getInstance());
+		int nbVilles=deuxsol.get(0).getInstance().getNbCities();
+		for(int i=0;i<nbVilles;i++) {
+			if(Math.random()<.5) {
+				bebe.setCityPosition(deuxsol.get(0).getCity(i), i);
+			}
+			else {
+				bebe.setCityPosition(deuxsol.get(1).getCity(i), i);
+			}
+		}
+		bebe.evaluate();
+		return bebe;
+	}
+	
+	//mute aléatoirement la solution s
+	public Solution mutation(Solution s) {
+		
+	}
+	
 	
 	
 	public Solution solve(Solution sol) throws Exception {
