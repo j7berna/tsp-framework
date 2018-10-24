@@ -77,9 +77,14 @@ public class Genetic extends AMetaheuristic {
 		return bebe;
 	}
 	
-	//mute aléatoirement la solution s
+	//mute aléatoirement la solution s, le nombre de mutations dépend de la taille
 	public Solution mutation(Solution s) {
-		
+		double taux_mutation=.01;
+		int nbVilles=s.getInstance().getNbCities();
+		for(int i=0;i<nbVilles;i++) {
+			if(Math.random()<taux_mutation)
+				
+		}
 	}
 	
 	
