@@ -1,5 +1,7 @@
 package tsp.heuristic;
 
+import java.util.Arrays;
+
 import tsp.Instance;
 import tsp.Solution;
 
@@ -43,6 +45,7 @@ public class LocalSearchInsertion2 extends AHeuristic {
 		for(int j=0; j<sol.length;j++) {
 			tempSol.setCityPosition(sol[j],j);
 		}
+		System.out.println(tempSol.evaluate());
 		return tempSol.evaluate() ;
 	}
 	
@@ -59,6 +62,7 @@ public class LocalSearchInsertion2 extends AHeuristic {
 
 	public void solve() throws Exception {
 		long[][] M=this.m_instance.getDistances();
+		System.out.println(Arrays.deepToString(M));
 		int[] sol= {0,0};
 		Solution s=new Solution(this.m_instance);
 		for (int i=1;i<M.length;i++) {
