@@ -37,15 +37,13 @@ public class LocalSearchInsertion2 extends AHeuristic {
 	
 	public static double longueur(int[] sol, long[][] M,Instance inst) throws Exception {
 		Solution tempSol = new Solution(inst);
-		int l=0;
-		int i= sol.length ;
-		while (i<inst.getNbCities()) {
-			sol =ajouter(i,0,sol);
+		while (sol.length<inst.getNbCities()) {
+			sol =ajouter(sol.length,0,sol);
 		}
 		for(int j=0; j<sol.length;j++) {
 			tempSol.setCityPosition(sol[j],j);
 		}
-		System.out.println(tempSol.evaluate());
+		tempSol.setCityPosition(0, inst.getNbCities());
 		return tempSol.evaluate() ;
 	}
 	
@@ -62,7 +60,6 @@ public class LocalSearchInsertion2 extends AHeuristic {
 
 	public void solve() throws Exception {
 		long[][] M=this.m_instance.getDistances();
-		System.out.println(Arrays.deepToString(M));
 		int[] sol= {0,0};
 		Solution s=new Solution(this.m_instance);
 		for (int i=1;i<M.length;i++) {
