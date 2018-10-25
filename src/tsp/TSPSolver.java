@@ -71,10 +71,11 @@ public class TSPSolver {
 	 */
 	public void solve() throws Exception {
 
-		// 
-		LocalSearchSwap res=new LocalSearchSwap(m_instance);
+		// LocalSearchSwap res=new LocalSearchSwap(m_instance);
+		//
 		//LocalSearchInsertion res= new LocalSearchInsertion(m_instance);
 		//Genetic res=new Genetic(m_instance);
+		LocalSearchInsertion2 res= new LocalSearchInsertion2(m_instance);
 		//
 				
 		// Example of a time loop

@@ -1,10 +1,8 @@
 package tsp;
 
-import tsp.heuristic.*;
-
 /**
  * 
- * This class is the place where you should enter your code and from which you can create your own objects.
+ * This classes is the place where you should enter your code and from which you can create your own objects.
  * 
  * The method you must implement is solve(). This method is called by the programmer after loading the data.
  * 
@@ -69,25 +67,19 @@ public class TSPSolver {
 	 * 
 	 * @throws Exception may return some error, in particular if some vertices index are wrong.
 	 */
-	public void solve() throws Exception {
-
-		// 
-		LocalSearchSwap res=new LocalSearchSwap(m_instance);
-		//LocalSearchInsertion res= new LocalSearchInsertion(m_instance);
-		//
-				
+	public void solve() throws Exception
+	{
+		m_solution.print(System.err);
+		
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
-		do {
-			//
-			res.solve();
-			this.m_solution=res.getSolution();
-			//
-			
+		do
+		{
+			// TODO
+			// Code a loop base on time here
 			spentTime = System.currentTimeMillis() - startTime;
-		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res.isDone());
-		this.m_solution.print(System.err);
+		}while(spentTime < (m_timeLimit * 1000 - 100) );
 		
 	}
 
