@@ -1,6 +1,8 @@
 package tsp.heuristic;
 
 
+import java.util.Arrays;
+
 import tsp.Instance;
 import tsp.Solution;
 
@@ -28,9 +30,12 @@ public class LocalSearchInsertion extends AHeuristic {
 		return lbis;
 	}
 	
-	public static int longueur(int[] sol, long[][] M) {
+	public static int longueur(int[] sol, long[][] M, int nbCities) {
 		int l=0;
-		for (int i=0;i<sol.length-1;i++) {
+		while(sol.length<=nbCities) {
+			sol=ajouter(sol.length,0,sol);
+		}
+		for (int i=0;i<nbCities;i++) {
 			l+=M[sol[i]][sol[i+1]];
 		}
 		return l;
@@ -56,10 +61,12 @@ public class LocalSearchInsertion extends AHeuristic {
 			int[] longueurs= new int[i];
 			for (int j=1;j<=i;j++) {
 				sols[j-1]=ajouter(j,i,sol);
-				longueurs[j-1]=longueur(sols[j-1], M);
+				
+				longueurs[j-1]=longueur(sols[j-1], M,this.m_instance.getNbCities());
 			}
 			int imin=indexMin(longueurs);
 			sol=sols[imin];
+			System.out.println(Arrays.toString(sol));
 		}
 		
 		for(int i=0;i<sol.length-1;i++) {
