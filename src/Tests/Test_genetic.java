@@ -43,16 +43,6 @@ public class Test_genetic {
 			}
 			i++;
 		}
-		
-		
-		
-		
-		//for(int i=1;i<nbVilles;i++) {
-		//	if (villesBebe[i]==0) {
-		//		villesBebe[i]=villesParent2.get(0);
-		//		villesParent2.remove(0);
-		//	}
-		//}
 
 		List<Integer> bebe=new ArrayList<Integer>();
 		for(int e:villesBebe) {bebe.add(e);}
@@ -73,7 +63,7 @@ public class Test_genetic {
 		parent1.add(0);
 		parent2.add(0);
 		
-		for(int i=0;i<1000;i++) {System.out.println(crossover(parent1,parent2).toString());}
+		for(int i=0;i<10000;i++) {System.out.println(crossover(parent1,parent2).toString());}
 		
 	
 		
