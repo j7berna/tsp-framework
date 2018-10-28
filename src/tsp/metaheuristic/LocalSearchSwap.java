@@ -1,4 +1,4 @@
-package tsp.heuristic;
+package tsp.metaheuristic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.NeighborSwap;
 
-public class LocalSearchSwap extends AHeuristic {
+public class LocalSearchSwap extends AMetaheuristic {
 	
 	//Variable d'instance valant true si la recherhe locale est terminée (condition de sortie de boucle dans TSPSolver)
 	protected boolean isDone;
@@ -42,11 +42,10 @@ public class LocalSearchSwap extends AHeuristic {
 		return sol;
 	}
 	
-	public void solve() throws Exception {
+	public Solution solve(Solution init) throws Exception {
 		long delta=Integer.MAX_VALUE;
 		
-		Solution sol2=this.ordInit();
-		//sol2=this.randInit(sol2);
+		Solution sol2=init;
 		
 		//Initialisation avec une autre heuristique
 		//InsertionB init=new InsertionB(this.getInstance());
@@ -66,9 +65,11 @@ public class LocalSearchSwap extends AHeuristic {
 		}
 					
 		this.isDone=true;
-		this.m_solution=sol2;
+		
+		return best;
 		
 	}
+
 	
 
 }

@@ -12,13 +12,13 @@ public class Genetic extends AHeuristic {
 	
 	private boolean isDone;
 	
-	//Paramètres de la simulation
-	public final int NB_GENERATIONS=100;
-	public final int TAILLE_POP=100;
-	public final double P_MUTATION=0.01;
-	
 	//Attention : ne pas modifier cette valeur !
 	public final int NB_VILLES=this.getInstance().getNbCities();
+	
+	//Paramètres de la simulation, à modifier 
+	public final int NB_GENERATIONS=1000;
+	public final int TAILLE_POP=100;
+	public final double P_MUTATION=0.01;
 	
 	//Constructeur
 	public Genetic(Instance instance) throws Exception {
@@ -75,6 +75,11 @@ public class Genetic extends AHeuristic {
 		res.add(pop.get(min1));
 		res.add(pop.get(min2));
 		return res;
+	}
+	
+	//retourne l'OV de la meilleure solution de la population pop
+	public long getBestOV(List<Solution> pop) {
+		return Collections.min(this.getObjectiveValues(pop));
 	}
 	
 	//retourne une solution fille issur de deux parents

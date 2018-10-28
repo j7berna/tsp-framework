@@ -75,7 +75,6 @@ public class LocalSearchInsertion2 extends AHeuristic {
 		
 		for(int i=0;i<sol.length-1;i++) {
 			s.setCityPosition(i,sol[i]);
-			s.evaluate();
 		}
 		
 		this.isDone=true;

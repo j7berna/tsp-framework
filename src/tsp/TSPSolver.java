@@ -1,6 +1,7 @@
 package tsp;
 
 import tsp.heuristic.*;
+import tsp.metaheuristic.LocalSearchSwap;
 
 /**
  * 
@@ -72,11 +73,9 @@ public class TSPSolver {
 	public void solve() throws Exception {
 
 
-		//LocalSearchSwap res=new LocalSearchSwap(m_instance);
-		//LocalSearchSwap res=new LocalSearchSwap(m_instance);
+		LocalSearchSwap res2=new LocalSearchSwap(m_instance);
 		//LocalSearchInsertion res= new LocalSearchInsertion(m_instance);
-		Genetic res=new Genetic(m_instance);
-		//Genetic res=new Genetic(m_instance);
+		Genetic res1=new Genetic(m_instance);
 		//LocalSearchInsertion2 res= new LocalSearchInsertion2(m_instance);
 				
 		// Example of a time loop
@@ -84,12 +83,13 @@ public class TSPSolver {
 		long spentTime = 0;
 		do {
 			//
-			res.solve();
-			this.m_solution=res.getSolution();
+			res1.solve();
+			this.m_solution=res1.getSolution();
+			this.m_solution=res2.solve(this.m_solution);
 			//
 			
 			spentTime = System.currentTimeMillis() - startTime;
-		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res.isDone());
+		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res1.isDone()&&!res2.isDone());
 		this.m_solution.print(System.err);
 		
 	}
