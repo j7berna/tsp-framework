@@ -3,6 +3,7 @@ package tsp.heuristic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import tsp.Instance;
 import tsp.Solution;
@@ -70,45 +71,23 @@ public class Genetic extends AHeuristic {
 		return res;
 	}
 	
-	
-	// Génère une solution fille
-	//Méthode non fonctionnelle !
-	public Solution crossover(Solution parent1, Solution parent2) throws Exception {
-		int nbVilles=this.getInstance().getNbCities();
-
-		List<Integer> villes_parent1=this.getVilles(parent1);
-		List<Integer> villes_parent2=this.getVilles(parent2);
-		
-		
-		
-		List<Integer> villesBebe=this.crossover(villes_parent1, villes_parent2);
-		
-		Solution bebe=new Solution(this.getInstance());
-		for(int i=0;i<nbVilles;i++) {bebe.setCityPosition(villesBebe.get(i), i);}
-		bebe.evaluate();
-		return bebe;
-		
-	}
-	
-	//méthode identique à crossover avec les listes 
-	public List<Integer> crossover(List<Integer> villes_parent1, List<Integer> villes_parent2) {
-		//ligne différente
+	public int[] crossoverInt(List<Integer> villes_parent1, List<Integer> villes_parent2) {
 		int nbVilles=villes_parent1.size()-1;
 
-		
-		//lignes différentes
 		List<Integer> villesParent1=new ArrayList<Integer>(villes_parent1);
 		List<Integer> villesParent2=new ArrayList<Integer>(villes_parent2);
 
 		//Calcul des index de début et de fin, FONCTIONNEL
-		int start_mut=1+(int)(Math.random()*nbVilles);
-		int end_mut = 1+(int)(Math.random()*nbVilles);
+		Random r=new Random();
+		int start_mut=1+r.nextInt(nbVilles-1);
+		int end_mut = 1+r.nextInt(nbVilles-1);
 		if (start_mut>end_mut) {
 			int a=end_mut;
 			end_mut=start_mut;
 			start_mut=a;}
 		if (start_mut==end_mut) end_mut++;
 		
+		//Création et initialisation de bebe
 		int[] villesBebe=new int[nbVilles+1];
 		for (int i=start_mut;i<end_mut;i++) {
 			villesBebe[i]=villesParent1.get(i);
@@ -116,7 +95,7 @@ public class Genetic extends AHeuristic {
 		}
 		villesParent2.remove(0);
 		villesParent2.remove(villesParent2.size()-1);
-				
+		
 		int i=1;
 		while (!villesParent2.isEmpty()) {
 			if (villesBebe[i]==0) {
@@ -126,15 +105,24 @@ public class Genetic extends AHeuristic {
 			i++;
 		}
 
-		List<Integer> bebe=new ArrayList<Integer>();
-		for(int e:villesBebe) {bebe.add(e);}
-		return bebe;
+		return villesBebe;
 
 	}
 	
+	public Solution crossover(Solution parent1, Solution parent2) throws Exception {
+		int[] bebe=this.crossoverInt(this.getVilles(parent1), this.getVilles(parent2));
+		
+		Solution res=new Solution(this.getInstance());
+		for(int i=0;i<this.getInstance().getNbCities();i++) {res.setCityPosition(bebe[i], i);}
+		res.evaluate();
+		return res;
+	}
+	
+	
+	
 	
 	//swap des villes en position i et j dans la solution s
-	public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
+ 	public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
 		Solution sol= s.copy();
 		int ville_arrivee=sol.getCity(pos_j);
 		sol.setCityPosition(sol.getCity(pos_i),pos_j);
@@ -145,12 +133,15 @@ public class Genetic extends AHeuristic {
 	}
 	
 	//mute aléatoirement la solution s, le nombre de mutations dépend d'une probabilité de mutation
+ 	//Non fonctionnel, rend les solutions irréalisables
 	public Solution mutation(Solution s) throws Exception {
-		double p_mutation=.01;
+		double p_mutation=0.01;
 		int nbVilles=s.getInstance().getNbCities();
 		for(int i=1;i<nbVilles;i++) {
-			if (Math.random()<p_mutation)
-				s=this.swap(s, i,1+(int)(nbVilles*Math.random()));
+			if (Math.random()<p_mutation) {
+				Random r=new Random();
+				s=this.swap(s, i,1+r.nextInt(nbVilles-1));
+			}
 		}
 		s.evaluate();
 		return s;
@@ -167,8 +158,8 @@ public class Genetic extends AHeuristic {
 	
 	
 	public void solve() throws Exception {
-		int nb_generations=2;
-		int taille=4;
+		int nb_generations=10;
+		int taille=100;
 		
 		List<Solution> gen=this.newPopulation(taille);
 		
