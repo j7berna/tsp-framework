@@ -45,7 +45,9 @@ public class LocalSearchSwap extends AMetaheuristic {
 	public Solution solve(Solution init) throws Exception {
 		long delta=Integer.MAX_VALUE;
 		
-		Solution sol2=init;
+		//Solution sol2=init;
+		
+		Solution sol2=this.randInit();
 		
 		//Initialisation avec une autre heuristique
 		//InsertionB init=new InsertionB(this.getInstance());
@@ -65,6 +67,8 @@ public class LocalSearchSwap extends AMetaheuristic {
 		}
 					
 		this.isDone=true;
+		
+		best.evaluate();
 		
 		return best;
 		
