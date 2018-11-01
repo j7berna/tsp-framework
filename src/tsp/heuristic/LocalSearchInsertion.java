@@ -1,13 +1,16 @@
 package tsp.heuristic;
 
-
 import java.util.Arrays;
 
 import tsp.Instance;
 import tsp.Solution;
 
 public class LocalSearchInsertion extends AHeuristic {
+
+	// variables d'instances 
 	private boolean isDone;
+	
+	// constructeurs
 	
 	public LocalSearchInsertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
@@ -17,6 +20,8 @@ public class LocalSearchInsertion extends AHeuristic {
 	public boolean isDone() {
 		return this.isDone;
 	}
+	
+	// fonction
 	
 	public static int[] ajouter(int index,int element, int[] l) {
 		int[] lbis=new int[l.length+1];
@@ -30,18 +35,19 @@ public class LocalSearchInsertion extends AHeuristic {
 		return lbis;
 	}
 	
-	public static int longueur(int[] sol, long[][] M, int nbCities) {
-		int l=0;
-		while(sol.length<=nbCities) {
-			sol=ajouter(sol.length,0,sol);
+	public static double longueur(int[] sol, long[][] M,Instance inst) throws Exception {
+		Solution tempSol = new Solution(inst);
+		while (sol.length<inst.getNbCities()) {
+			sol =ajouter(sol.length,0,sol);
 		}
-		for (int i=0;i<nbCities;i++) {
-			l+=M[sol[i]][sol[i+1]];
+		for(int j=0; j<sol.length;j++) {
+			tempSol.setCityPosition(sol[j],j);
 		}
-		return l;
+		tempSol.setCityPosition(0, inst.getNbCities());
+		return tempSol.evaluate() ;
 	}
 	
-	public static int indexMin(int[] longueurs) {
+	public static int indexMin(double[] longueurs) {
 		int res=0;
 		for (int i=0;i<longueurs.length;i++) {
 			if (longueurs[i]<longueurs[res]) {
@@ -58,20 +64,17 @@ public class LocalSearchInsertion extends AHeuristic {
 		Solution s=new Solution(this.m_instance);
 		for (int i=1;i<M.length;i++) {
 			int[][] sols= new int[i][sol.length+1];
-			int[] longueurs= new int[i];
+			double[] longueurs= new double[i];
 			for (int j=1;j<=i;j++) {
 				sols[j-1]=ajouter(j,i,sol);
-				
-				longueurs[j-1]=longueur(sols[j-1], M,this.m_instance.getNbCities());
+				longueurs[j-1]=longueur(sols[j-1], M,this.m_instance);
 			}
 			int imin=indexMin(longueurs);
 			sol=sols[imin];
-			System.out.println(Arrays.toString(sol));
 		}
 		
 		for(int i=0;i<sol.length-1;i++) {
 			s.setCityPosition(i,sol[i]);
-			s.evaluate();
 		}
 		
 		this.isDone=true;
@@ -81,3 +84,5 @@ public class LocalSearchInsertion extends AHeuristic {
 
 
 }
+
+
