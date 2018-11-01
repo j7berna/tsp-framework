@@ -18,10 +18,8 @@ public class NeighborSwap extends ANeighborhood {
 	}
 	
 	
-	/** getNeighborhood(Solution sol)
+	/**
 	 * @return Retourne les positions voisines de sol (règle des swap) 
-	 * 
-	 * Méthode fonctionnelle
 	 */
 	public List<Solution> getNeighborhood(Solution sol) throws Exception {
 		List<Solution> voisins = new ArrayList<Solution>();
@@ -36,46 +34,38 @@ public class NeighborSwap extends ANeighborhood {
 		
 	}
 	
-	/** swap(Solution s, int pos_i, int pos_j)
-	 * 
-	 * @param s la solution à étudier
+	/** 
+	 * @param s
 	 * @param pos_i 
 	 * @param pos_j 
 	 * @return Copie la solution s, échange les villes en position i et j et retourne la solution recalculée
-	 * 
-	 * Méthode fonctionnelle
 	 */
-		public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
-			Solution sol= s.copy();
-			
-			int ville_arrivee=sol.getCity(pos_j);
-			sol.setCityPosition(sol.getCity(pos_i),pos_j);
-			sol.setCityPosition(ville_arrivee, pos_i);
-			sol.evaluate();
-			
-			return sol;
-		}
+	public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
+		Solution sol= s.copy();
 		
-		/** bestSolution(Solution sol)
-		 * 
-		 * @param s la solution à étudier
-		 * @return Retourne la meilleure solution parmi l'entourage de la solution sol
-		 * 
-		 */
-		public Solution bestSolution(Solution sol) throws Exception {
-			List<Solution> voisins=this.getNeighborhood(sol);
-			long j=Long.MAX_VALUE;
-			Solution best=null;
-
+		int ville_arrivee=sol.getCity(pos_j);
+		sol.setCityPosition(sol.getCity(pos_i),pos_j);
+		sol.setCityPosition(ville_arrivee, pos_i);
+		sol.evaluate();
+		
+		return sol;
+	}
+	
+	/** 
+	 * @param s
+	 * @return Retourne la meilleure solution parmi le voisinage de la solution sol
+	 * 
+	 */
+	public Solution bestSolution(Solution sol) throws Exception {
+		List<Solution> voisins=this.getNeighborhood(sol);
+		long j=Long.MAX_VALUE;
+		Solution best=null;
 			for(Solution i:voisins) {
-				if (i.getObjectiveValue()<j) {
-					best=i;
-					j=i.getObjectiveValue();
-				}
+			if (i.getObjectiveValue()<j) {
+				best=i;
+				j=i.getObjectiveValue();
 			}
-			return best;
 		}
-	
-	
-
+		return best;
+	}
 }

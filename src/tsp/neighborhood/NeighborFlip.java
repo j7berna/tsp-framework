@@ -12,7 +12,14 @@ public class NeighborFlip extends ANeighborhood{
 	public NeighborFlip(Instance instance) throws Exception {
 		super(instance, "NeighborFlip");
 	}
-
+	
+	/**
+	 * Retourne la liste de toutes les configurations possibles à partir de la Solution de départ
+	 * 
+	 * Pour obtenir une configuation voisine, on applique la règle du flip antre tous les couples d'arêtes
+	 * Règle du flip : on inverse le chemin entre deux arêtes
+	 * "1-2-3-4-5-6" --> Flip entre les index 1 et 4 --> "1-5-4-3-2-6"
+	 */
 	public List<Solution> getNeighborhood(Solution sol) throws Exception {
 		int nbVilles=sol.getInstance().getNbCities();
 		List<Solution> res=new ArrayList<Solution>();
@@ -38,12 +45,23 @@ public class NeighborFlip extends ANeighborhood{
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param pop une population de Solution
+	 * @return ArrayList des objectiveValue de chacune des Solution de pop
+	 */
 	public List<Long> getObjectiveValues(List<Solution> pop){
 		List<Long> ov=new ArrayList<Long>();
 		for(Solution i:pop) {ov.add(i.getObjectiveValue());}
 		return ov;
 	}
 	
+	/**
+	 * 
+	 * @param sol
+	 * @return meilleure Solution du voisinage de sol selon l'objectiveValue
+	 * @throws Exception
+	 */
 	public Solution bestSolution(Solution sol) throws Exception {
 		List<Solution> voisins=this.getNeighborhood(sol);
 		List<Long> ov=this.getObjectiveValues(voisins);

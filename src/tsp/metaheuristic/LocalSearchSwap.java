@@ -10,20 +10,38 @@ import tsp.neighborhood.NeighborSwap;
 
 public class LocalSearchSwap extends AMetaheuristic {
 	
-	//Variable d'instance valant true si la recherhe locale est terminée (condition de sortie de boucle dans TSPSolver)
+	/**
+	 * Vaut true si la méthode solve a été exécutée
+	 */
 	protected boolean isDone;
 
-	//Constructeur
+	/**
+	 * this.m_name="Local Search"
+	 * this.isDone=false
+	 * @param instance
+	 * @throws Exception
+	 */
 	public LocalSearchSwap(Instance instance) throws Exception {
 		super(instance,"Local Search");
 		this.isDone=false;
 	}
 	
-	//Accesseurs
+	/**
+	 * 
+	 * @return super.m_instance 
+	 */
 	public Instance getInstance() {return super.m_instance;}
+	/**
+	 * 
+	 * @return this.isDone
+	 */
 	public boolean isDone() {return this.isDone;}
 	
-	//Initialisation aléatoire
+	/**
+	 * 
+	 * @return Solution au parcours initialisé aléatoirement
+	 * @throws Exception
+	 */
 	public Solution randInit() throws Exception {
 		Solution sol=new Solution(m_instance);
 		List<Integer> rand = new ArrayList<Integer>();
@@ -34,7 +52,11 @@ public class LocalSearchSwap extends AMetaheuristic {
 		return sol;
 	}
 	
-	//Initialisation dans l'ordre
+	/**
+	 * 
+	 * @return Solution au parcours initialisé dans l'ordre, ville i en position i
+	 * @throws Exception
+	 */
 	public Solution ordInit() throws Exception{
 		Solution sol=new Solution(this.m_instance);
 		for(int i=0;i<this.getInstance().getNbCities();i++) {sol.setCityPosition(i, i);}
@@ -42,6 +64,9 @@ public class LocalSearchSwap extends AMetaheuristic {
 		return sol;
 	}
 	
+	/**
+	 * @return Solution construite par recherche locale/swap
+	 */
 	public Solution solve(Solution init) throws Exception {
 		long delta=Integer.MAX_VALUE;
 		

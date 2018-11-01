@@ -10,27 +10,56 @@ import tsp.Solution;
 
 public class Genetic extends AHeuristic {
 	
+	/**
+	 * Vaut true si la méthode solve a été exécutée
+	 */
 	private boolean isDone;
 	
-	//Attention : ne pas modifier cette valeur !
+	/**
+	 * Nombre de villes de l'instance
+	 */
 	public final int NB_VILLES=this.getInstance().getNbCities();
 	
-	//Paramètres de la simulation, à modifier 
+	/**
+	 * Nombre de générations
+	 */
 	public final int NB_GENERATIONS=1000;
+	/**
+	 * Nombre d'individus par génération
+	 */
 	public final int TAILLE_POP=100;
+	/**
+	 * Probabilité de mutation
+	 */
 	public final double P_MUTATION=0.01;
 	
-	//Constructeur
+	/**
+	 * this.m_name="Genetic Algorithm"
+	 * this.isDone=false
+	 * @param instance
+	 * @throws Exception
+	 */
 	public Genetic(Instance instance) throws Exception {
 		super(instance,"Genetic algorithm");
 		this.isDone=false;
 	}
 	
-	//Accesseurs
+	/**
+	 * 
+	 * @return super.m_instance
+	 */
 	public Instance getInstance() {return super.m_instance;}
+	/**
+	 * 
+	 * @return this.isDone
+	 */
 	public boolean isDone() {return this.isDone;}
 	
-	//Crée une solution au parcours généré aléatoirement
+	/**
+	 * 
+	 * @return Solution au parcours initialisé aléatoirement
+	 * @throws Exception
+	 */
 	public Solution randSolution() throws Exception {
 		Solution sol=new Solution(m_instance);
 		List<Integer> rand = new ArrayList<Integer>();
@@ -41,7 +70,11 @@ public class Genetic extends AHeuristic {
 		return sol;
 	}
 	
-	//Crée une liste de solutions générées aléatoirement
+	/**
+	 * 
+	 * @return ArrayList de this.TAILLE_POP Solution initialisées aléatoirement
+	 * @throws Exception
+	 */
 	public List<Solution> newPopulation() throws Exception{
 		List<Solution> pop = new ArrayList<Solution>();
 		for(int i=0;i<TAILLE_POP;i++) {
@@ -50,21 +83,34 @@ public class Genetic extends AHeuristic {
 		return pop;
 	}
 	
-	//retourne la liste des valeurs objectif d'une population
+	/**
+	 * 
+	 * @param pop population de Solution
+	 * @return ArrayList des valeurs objectif de chaque Solution
+	 */
 	public List<Long> getObjectiveValues(List<Solution> pop){
 		List<Long> ov=new ArrayList<Long>();
 		for(Solution i:pop) {ov.add(i.getObjectiveValue());}
 		return ov;
 	}
 	
-	//retourne la liste de villes d'une solution
+	/**
+	 * 
+	 * @param s une Solution
+	 * @return ArrayList des villes de la Solution dans l'ordre
+	 * @throws Exception
+	 */
 	public List<Integer> getVilles(Solution s) throws Exception{
 		List<Integer> res=new ArrayList<Integer>();
 		for(int i=0;i<=NB_VILLES;i++) {res.add(s.getCity(i));}
 		return res;
 	}
 	
-	//retourne les deux meilleures solutions d'une population
+	/**
+	 * 
+	 * @param pop ArrayList de Solution
+	 * @return ArrayList des DEUX meilleures Solution de pop selon leur objectiveValue
+	 */
 	public List<Solution> getTwoBest(List<Solution> pop){
 		List<Solution> res=new ArrayList<Solution>();
 		List<Long> ov=this.getObjectiveValues(pop);
@@ -77,12 +123,22 @@ public class Genetic extends AHeuristic {
 		return res;
 	}
 	
-	//retourne l'OV de la meilleure solution de la population pop
+	/**
+	 * 
+	 * @param pop population de Solution
+	 * @return objectiveValue de la meilleure Solution de pop 
+	 */
 	public long getBestOV(List<Solution> pop) {
 		return Collections.min(this.getObjectiveValues(pop));
 	}
 	
-	//retourne une solution fille issur de deux parents
+	/**
+	 * 
+	 * @param parent1
+	 * @param parent2
+	 * @return Nouvelle Solution issue du croisement entre les trajets de parent1 et parent21
+	 * @throws Exception
+	 */
 	public Solution crossover(Solution parent1, Solution parent2) throws Exception {
 		
 		List<Integer> villesParent1=this.getVilles(parent1);
@@ -124,7 +180,14 @@ public class Genetic extends AHeuristic {
 		return bebe;
 	}
 	
-	//swap des villes en position i et j dans la solution s
+	/**
+	 * 
+	 * @param s
+	 * @param pos_i
+	 * @param pos_j
+	 * @return Nouvelle Solution valant s avec les villes en pos_i et pos_j interverties
+	 * @throws Exception
+	 */
  	public Solution swap(Solution s, int pos_i, int pos_j) throws Exception{
 		Solution sol= s.copy();
 		int ville_arrivee=sol.getCity(pos_j);
@@ -135,7 +198,12 @@ public class Genetic extends AHeuristic {
 		return sol;
 	}
 	
-	//mute aléatoirement la solution s selon une probabilité
+	/**
+	 * 
+	 * @param s
+	 * @return Pour chaque ville de s, il y a une probabilité this.P_MUTATION d'être swap avec une ville au hasard de la Solution
+	 * @throws Exception
+	 */
 	public Solution mutation(Solution s) throws Exception {
 		for(int i=1;i<NB_VILLES;i++) {
 			if (Math.random()<P_MUTATION) {
@@ -147,6 +215,12 @@ public class Genetic extends AHeuristic {
 		return s;
 	}
 	
+	/**
+	 * 
+	 * @param prec génération précédente
+	 * @return Nouvelle population issue de la première génération
+	 * @throws Exception
+	 */
 	public List<Solution> generation(List<Solution> prec) throws Exception{
 		List<Solution> gen=new ArrayList<Solution>();
 		for(int i=0;i<TAILLE_POP;i++) {
@@ -156,6 +230,7 @@ public class Genetic extends AHeuristic {
 		return gen;
 	}
 	
+
 	public void solve() throws Exception {
 		
 		List<Solution> gen=this.newPopulation();

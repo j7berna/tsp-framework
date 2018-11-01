@@ -10,17 +10,35 @@ import tsp.neighborhood.NeighborFlip;
 
 public class TwoOpt extends AHeuristic {
 	
+	/**
+	 * Vaut true si la méthode solve a été exécutée
+	 */
 	public boolean isDone;
 
+	/**
+	 * this.m_name="2-Opt algorithm"
+	 * this.isDone=false
+	 * @param instance
+	 * @throws Exception
+	 */
 	public TwoOpt(Instance instance) throws Exception {
 		super(instance, "2-Opt algorithm");
 		this.isDone=false;
 	}
 	
+	/**
+	 * 
+	 * @return this.isDone
+	 */
 	public boolean isDone() {
 		return this.isDone;
 	}
 	
+	/**
+	 * 
+	 * @return Solution initialisée aléatoirement
+	 * @throws Exception
+	 */
 	public Solution randSolution() throws Exception {
 		Solution sol=new Solution(m_instance);
 		
