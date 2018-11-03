@@ -72,23 +72,21 @@ public class TSPSolver {
 	 */
 	public void solve() throws Exception {
 		//LocalSearchInsertion res= new LocalSearchInsertion(m_instance);
-		//Genetic res=new Genetic(m_instance);
+		Genetic res2=new Genetic(m_instance);
 		TwoOpt res=new TwoOpt(m_instance);
-		LocalSearchSwap res2=new LocalSearchSwap(m_instance);
+		//LocalSearchSwap res2=new LocalSearchSwap(m_instance);
 				
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
 		do {
-			//
+			
+			res2.solve();
+			res.setInit(res2.getSolution());
 			res.solve();
 			this.m_solution=res.getSolution();
-			spentTime = System.currentTimeMillis() - startTime;
-			while (this.m_solution.getObjectiveValue()>res2.solve(this.m_solution).getObjectiveValue() && spentTime < (m_timeLimit*1000-100)) {
-				this.m_solution=res2.solve(this.m_solution);
-			}
-			//
 			
+			spentTime = System.currentTimeMillis() - startTime;
 			
 		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res.isDone());
 		this.m_solution.print(System.err);

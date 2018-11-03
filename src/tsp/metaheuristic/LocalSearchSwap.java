@@ -72,7 +72,7 @@ public class LocalSearchSwap extends AMetaheuristic {
 		
 		//Solution sol2=init;
 		
-		Solution sol2=this.randInit();
+		Solution sol2=init;
 		
 		//Initialisation avec une autre heuristique
 		//InsertionB init=new InsertionB(this.getInstance());

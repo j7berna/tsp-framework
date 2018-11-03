@@ -27,7 +27,7 @@ public class Genetic extends AHeuristic {
 	/**
 	 * Nombre d'individus par génération
 	 */
-	public final int TAILLE_POP=100;
+	public final int TAILLE_POP=1000;
 	/**
 	 * Probabilité de mutation
 	 */

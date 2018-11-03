@@ -14,6 +14,8 @@ public class TwoOpt extends AHeuristic {
 	 * Vaut true si la méthode solve a été exécutée
 	 */
 	public boolean isDone;
+	
+	public Solution init;
 
 	/**
 	 * this.m_name="2-Opt algorithm"
@@ -24,18 +26,21 @@ public class TwoOpt extends AHeuristic {
 	public TwoOpt(Instance instance) throws Exception {
 		super(instance, "2-Opt algorithm");
 		this.isDone=false;
+		this.init=null;
 	}
 	
 	/**
-	 * 
 	 * @return this.isDone
 	 */
 	public boolean isDone() {
 		return this.isDone;
 	}
 	
+	public void setInit(Solution s) {
+		this.init=s;
+	}
+	
 	/**
-	 * 
 	 * @return Solution initialisée aléatoirement
 	 * @throws Exception
 	 */
@@ -51,9 +56,9 @@ public class TwoOpt extends AHeuristic {
 		sol.evaluate();
 		return sol;
 	}
+	
 
 	public void solve() throws Exception {
-		Solution init=this.randSolution();
 		Solution best=init;
 
 		NeighborFlip nf=new NeighborFlip(init.getInstance());
