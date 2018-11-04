@@ -2,6 +2,7 @@ package tsp;
 
 import tsp.heuristic.*;
 import tsp.metaheuristic.LocalSearchSwap;
+import tsp.metaheuristic.TwoOpt;
 
 /**
  * 
@@ -71,25 +72,23 @@ public class TSPSolver {
 	 * @throws Exception may return some error, in particular if some vertices index are wrong.
 	 */
 	public void solve() throws Exception {
-		//LocalSearchInsertion res= new LocalSearchInsertion(m_instance);
-		Genetic res2=new Genetic(m_instance);
-		TwoOpt res=new TwoOpt(m_instance);
-		//LocalSearchSwap res2=new LocalSearchSwap(m_instance);
+		
+		LocalSearchSwap res2=new LocalSearchSwap(this.m_instance);
+		//Insertion res=new Insertion(this.m_instance);
+		TwoOpt res=new TwoOpt(this.m_instance);
 				
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
 		do {
 			
-			res2.solve();
-			res.setInit(res2.getSolution());
-			res.solve();
-			this.m_solution=res.getSolution();
+			this.m_solution=res.solve(res2.ordInit());
+			//res.solve();
+			//this.m_solution=res.getSolution();
 			
 			spentTime = System.currentTimeMillis() - startTime;
 			
 		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res.isDone());
-		this.m_solution.print(System.err);
 		
 	}
 

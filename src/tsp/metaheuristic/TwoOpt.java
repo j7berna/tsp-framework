@@ -1,4 +1,4 @@
-package tsp.heuristic;
+package tsp.metaheuristic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,14 +8,12 @@ import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.NeighborFlip;
 
-public class TwoOpt extends AHeuristic {
+public class TwoOpt extends AMetaheuristic {
 	
 	/**
 	 * Vaut true si la méthode solve a été exécutée
 	 */
 	public boolean isDone;
-	
-	public Solution init;
 
 	/**
 	 * this.m_name="2-Opt algorithm"
@@ -26,7 +24,6 @@ public class TwoOpt extends AHeuristic {
 	public TwoOpt(Instance instance) throws Exception {
 		super(instance, "2-Opt algorithm");
 		this.isDone=false;
-		this.init=null;
 	}
 	
 	/**
@@ -34,10 +31,6 @@ public class TwoOpt extends AHeuristic {
 	 */
 	public boolean isDone() {
 		return this.isDone;
-	}
-	
-	public void setInit(Solution s) {
-		this.init=s;
 	}
 	
 	/**
@@ -58,7 +51,7 @@ public class TwoOpt extends AHeuristic {
 	}
 	
 
-	public void solve() throws Exception {
+	public Solution solve(Solution init) throws Exception {
 		Solution best=init;
 
 		NeighborFlip nf=new NeighborFlip(init.getInstance());
@@ -73,7 +66,7 @@ public class TwoOpt extends AHeuristic {
 		
 		this.isDone=true;
 		best.evaluate();
-		this.m_solution=best;
+		return best;
 	}
 	
 	

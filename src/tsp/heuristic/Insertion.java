@@ -5,14 +5,14 @@ import java.util.Arrays;
 import tsp.Instance;
 import tsp.Solution;
 
-public class LocalSearchInsertion extends AHeuristic {
+public class Insertion extends AHeuristic {
 
 	// variables d'instances 
 	private boolean isDone;
 	
 	// constructeurs
 	
-	public LocalSearchInsertion(Instance instance) throws Exception {
+	public Insertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
 		this.isDone=false;
 	}

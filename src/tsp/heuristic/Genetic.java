@@ -223,8 +223,8 @@ public class Genetic extends AHeuristic {
 	 */
 	public List<Solution> generation(List<Solution> prec) throws Exception{
 		List<Solution> gen=new ArrayList<Solution>();
+		List<Solution> parents=this.getTwoBest(prec);
 		for(int i=0;i<TAILLE_POP;i++) {
-			List<Solution> parents=this.getTwoBest(prec);
 			gen.add(this.mutation(this.crossover(parents.get(0),parents.get(1))));
 		}
 		return gen;
