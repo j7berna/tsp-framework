@@ -135,7 +135,7 @@ public class Genetic extends AHeuristic {
 	 * 
 	 * @param parent1
 	 * @param parent2
-	 * @return Nouvelle Solution issue du croisement entre les trajets de parent1 et parent21
+	 * @return Nouvelle Solution issue du croisement entre les trajets de parent1 et parent2
 	 * @throws Exception
 	 */
 	public Solution crossover(Solution parent1, Solution parent2) throws Exception {
@@ -229,7 +229,10 @@ public class Genetic extends AHeuristic {
 		return gen;
 	}
 	
-
+/**
+ * Algorithme générant une solution 
+ * @throws Exception
+ */
 	public void solve() throws Exception {
 		
 		List<Solution> gen=this.newPopulation();
