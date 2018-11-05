@@ -8,21 +8,38 @@ import tsp.Solution;
 public class Insertion extends AHeuristic {
 
 	// variables d'instances 
+/**
+ * Vaut true si la méthode solve a été exécutée
+ */
 	private boolean isDone;
 	
 	// constructeurs
-	
+/**
+ *  this.m_name="Insertion"
+ * this.isDone=false
+ * @param instance
+ * @throws Exception
+ */
 	public Insertion(Instance instance) throws Exception {
 		super(instance,"Insertion");
 		this.isDone=false;
 	}
-	
+/**
+ * 
+ * @return isDone
+ */
 	public boolean isDone() {
 		return this.isDone;
 	}
 	
 	// fonction
-	
+/**
+ * Ajoute la Ville element à la liste l à la position index 
+ * @param index
+ * @param element
+ * @param l
+ * @return la liste modifiée 
+ */
 	public static int[] ajouter(int index,int element, int[] l) {
 		int[] lbis=new int[l.length+1];
 		for (int i=0;i<index;i++) {
@@ -34,7 +51,14 @@ public class Insertion extends AHeuristic {
 		}
 		return lbis;
 	}
-	
+/**
+ * renvoie la longueur de la liste temporaire
+ * @param sol
+ * @param M
+ * @param inst
+ * @return la longueur de la liste l
+ * @throws Exception
+ */
 	public static double longueur(int[] sol, long[][] M,Instance inst) throws Exception {
 		Solution tempSol = new Solution(inst);
 		while (sol.length<inst.getNbCities()) {
@@ -46,7 +70,11 @@ public class Insertion extends AHeuristic {
 		tempSol.setCityPosition(0, inst.getNbCities());
 		return tempSol.evaluate() ;
 	}
-	
+/**
+ * 	
+ * @param longueurs
+ * @return l'index auquel la ville en cours d'insertion doit être ajoutée
+ */
 	public static int indexMin(double[] longueurs) {
 		int res=0;
 		for (int i=0;i<longueurs.length;i++) {
@@ -57,7 +85,10 @@ public class Insertion extends AHeuristic {
 		return res;
 	}
 	
-
+/**
+ * renvoie une solution 
+ * @throws Exception 
+ */
 	public void solve() throws Exception {
 		long[][] M=this.m_instance.getDistances();
 		int[] sol= {0,0};
