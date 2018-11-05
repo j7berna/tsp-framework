@@ -1,7 +1,7 @@
 package tsp;
 
 import tsp.heuristic.*;
-import tsp.metaheuristic.LocalSearchSwap;
+import tsp.metaheuristic.Swap;
 import tsp.metaheuristic.TwoOpt;
 
 /**
@@ -73,22 +73,22 @@ public class TSPSolver {
 	 */
 	public void solve() throws Exception {
 		
-		LocalSearchSwap res2=new LocalSearchSwap(this.m_instance);
-		//Insertion res=new Insertion(this.m_instance);
-		TwoOpt res=new TwoOpt(this.m_instance);
+		TwoOpt twoOpt =new TwoOpt(this.m_instance);
+		Genetic init=new Genetic(this.m_instance);
 				
-		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
 		do {
 			
-			this.m_solution=res.solve(res2.ordInit());
-			//res.solve();
-			//this.m_solution=res.getSolution();
+			//On crée une solution initiale pour exécuter twoOpt
+			init.solve();
+			//On exécute twoOpt
+			this.m_solution=twoOpt.solve(init.getSolution());
 			
 			spentTime = System.currentTimeMillis() - startTime;
 			
-		} while(spentTime < (m_timeLimit * 1000 - 100)&&!res.isDone());
+		} while(spentTime < (m_timeLimit * 1000 - 100)&&!twoOpt.isDone());
+		//condition d'arrêt de la boucle : twoOpt doit être exécuté
 		
 	}
 

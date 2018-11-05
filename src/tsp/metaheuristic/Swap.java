@@ -8,7 +8,7 @@ import tsp.Instance;
 import tsp.Solution;
 import tsp.neighborhood.NeighborSwap;
 
-public class LocalSearchSwap extends AMetaheuristic {
+public class Swap extends AMetaheuristic {
 	
 	/**
 	 * Vaut true si la méthode solve a été exécutée
@@ -21,7 +21,7 @@ public class LocalSearchSwap extends AMetaheuristic {
 	 * @param instance
 	 * @throws Exception
 	 */
-	public LocalSearchSwap(Instance instance) throws Exception {
+	public Swap(Instance instance) throws Exception {
 		super(instance,"Local Search");
 		this.isDone=false;
 	}

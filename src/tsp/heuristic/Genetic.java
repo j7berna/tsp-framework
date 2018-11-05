@@ -19,15 +19,14 @@ public class Genetic extends AHeuristic {
 	 * Nombre de villes de l'instance
 	 */
 	public final int NB_VILLES=this.getInstance().getNbCities();
-	
-	/**
-	 * Nombre de générations
-	 */
-	public final int NB_GENERATIONS=1000;
 	/**
 	 * Nombre d'individus par génération
 	 */
-	public final int TAILLE_POP=1000;
+	public final int TAILLE_POP=100;
+	/**
+	 * Nombre de générations
+	 */
+	public final int NB_GENERATIONS=10*NB_VILLES;
 	/**
 	 * Probabilité de mutation
 	 */
