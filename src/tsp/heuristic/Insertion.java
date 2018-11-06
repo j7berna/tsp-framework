@@ -1,7 +1,5 @@
 package tsp.heuristic;
 
-import java.util.Arrays;
-
 import tsp.Instance;
 import tsp.Solution;
 
